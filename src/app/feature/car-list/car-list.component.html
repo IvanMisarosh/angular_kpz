@@ -1,0 +1,8 @@
+<h1>Car List</h1>
+<ul>
+  <li *ngFor="let car of cars">
+    {{ car.modelName }}
+    <a [routerLink]="['/car/update', car.carID]">Edit</a>
+  </li>
+</ul>
+<a routerLink="/car/add">Add New Car</a>
