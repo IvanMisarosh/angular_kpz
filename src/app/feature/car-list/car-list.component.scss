@@ -1,0 +1,117 @@
+/* Basic Styling */
+.page-nav {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.page-nav button {
+  padding: 12px 24px;
+  margin: 0 12px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.page-nav button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.page-nav button:not(:disabled):hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.page-nav button:not(:disabled):active {
+  background-color: #398e3b;
+  transform: translateY(1px);
+}
+
+/* Table Layout */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 16px 24px;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+td {
+  color: #555;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Pagination Styling */
+mat-paginator {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .page-nav button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  table th,
+  table td {
+    padding: 8px;
+  }
+
+  mat-paginator {
+    margin-top: 15px;
+    font-size: 12px;
+  }
+
+  .page-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

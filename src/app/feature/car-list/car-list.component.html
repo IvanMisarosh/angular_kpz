@@ -1,8 +1,41 @@
-<h1>Car List</h1>
-<ul>
-  <li *ngFor="let car of cars">
-    {{ car.modelName }}
-    <a [routerLink]="['/car/update', car.carID]">Edit</a>
-  </li>
-</ul>
-<a routerLink="/car/add">Add New Car</a>
+<nav class="page-nav">
+  <!-- Separate buttons for Add and Edit -->
+  <button (click)="navigateToAdd()">Add Car</button>
+  <button (click)="navigateToEdit()" [disabled]="!selectedCar">Update Car</button>
+  <button (click)="navigateToDelete()" [disabled]="!selectedCar">Delete Car</button>
+</nav>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Select</th>
+    <th>Customer Name</th>
+    <th>Car Model</th>
+    <th>Color</th>
+    <th>VIN</th>
+    <th>Manufacture Year</th>
+    <th>Mileage</th>
+    <th>Note</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let car of paginatedCars">
+    <td>
+      <input type="radio" name="selectedCar" (click)="selectCar(car)">
+    </td>
+    <td>{{ car.customer.firstName }}</td>
+    <td>{{ car.carModel.modelName }}</td>
+    <td>{{ car.color.colorName }}</td>
+    <td>{{ car.vin }}</td>
+    <td>{{ car.manufactureYear }}</td>
+    <td>{{ car.mileage }}</td>
+    <td>{{ car.note }}</td>
+  </tr>
+  </tbody>
+</table>
+
+<nav class="page-nav">
+  <button (click)="prevPage()" [disabled]="currentPage === totalPages">Prev</button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+</nav>

@@ -1,38 +1,63 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { CarModel } from '../models/CarModel'; // Adjust the path as necessary
+import { Car } from '../models/Car';
 
 @Injectable({
-  providedIn: 'root' // This makes the service available app-wide
+  providedIn: 'root', // Makes it a standalone service
 })
 export class CarService {
-  private apiUrl = 'https://localhost:5001/api/Сar'; // Replace with your actual API URL
+  private readonly apiUrl = `${environment.apiUrl}/Car`; // Replace with your actual API endpoint
 
   constructor(private http: HttpClient) {}
 
-  // Get list of cars
-  getCars(): Observable<CarModel[]> {
-    return this.http.get<CarModel[]>(this.apiUrl);
+  /**
+   * Get all cars
+   * @returns Observable<Car[]>
+   */
+  getCars(): Observable<Car[]> {
+    // debugger;
+    console.log('getCars');
+    return this.http.get<Car[]>(`${this.apiUrl}`);
   }
 
-  // Get car by ID
-  getCarById(carId: number): Observable<CarModel> {
-    return this.http.get<CarModel>(`${this.apiUrl}/${carId}`);
+  /**
+   * Get a car by ID
+   * @param id Car ID
+   * @returns Observable<Car>
+   */
+  getCarById(id: number): Observable<Car> {
+    return this.http.get<Car>(`${this.apiUrl}/${id}`);
   }
 
-  // Add a new car
-  addCar(car: CarModel): Observable<CarModel> {
-    return this.http.post<CarModel>(this.apiUrl, car);
+  /**
+   * Add a new car
+   * @param car Car data
+   * @returns Observable<Car>
+   */
+  addCar(car: Car): Observable<Car> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    console.log(car)
+    return this.http.post<Car>(this.apiUrl, car, { headers });
   }
 
-  // Update an existing car
-  updateCar(carId: number, car: CarModel): Observable<CarModel> {
-    return this.http.put<CarModel>(`${this.apiUrl}/${carId}`, car);
+  /**
+   * Update an existing car
+   * @param car Car data
+   * @returns Observable<void>
+   */
+  updateCar(car: Car): Observable<void> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<void>(`${this.apiUrl}/${car.carID}`, car, { headers });
   }
 
-  // Delete a car by ID
-  deleteCar(carId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${carId}`);
+  /**
+   * Delete a car by ID
+   * @param id Car ID
+   * @returns Observable<void>
+   */
+  deleteCar(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

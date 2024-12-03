@@ -1,1 +1,69 @@
-<p>car-form works!</p>
+<h2>{{ isEditMode ? 'Edit Car' : 'Add Car' }}</h2>
+
+<form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="customerID">Customer:</label>
+    <select id="customerID" formControlName="customerID">
+      <option *ngFor="let customer of customers" [value]="customer.customerID">
+        {{ customer.firstName }} {{ customer.lastName }}
+      </option>
+    </select>
+    <div *ngIf="carForm.get('customerID')?.invalid && carForm.get('customerID')?.touched">
+      Customer is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="carModelID">Car Model:</label>
+    <select id="carModelID" formControlName="carModelID">
+      <option *ngFor="let carModel of carModels" [value]="carModel.carModelID">
+        {{ carModel.modelName }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label for="colorID">Color:</label>
+    <select id="colorID" formControlName="colorID">
+      <option *ngFor="let color of colors" [value]="color.colorID">
+        {{ color.colorName }}
+      </option>
+    </select>
+    <div *ngIf="carForm.get('colorID')?.invalid && carForm.get('colorID')?.touched">
+      Color is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="manufactureYear">Manufacture Year:</label>
+    <input id="manufactureYear" type="number" formControlName="manufactureYear" />
+    <div *ngIf="carForm.get('manufactureYear')?.invalid && carForm.get('manufactureYear')?.touched">
+      Manufacture year is required and must be after 1886.
+    </div>
+  </div>
+
+  <div>
+    <label for="vin">VIN:</label>
+    <input id="vin" type="text" formControlName="vin" />
+    <div *ngIf="carForm.get('vin')?.invalid && carForm.get('vin')?.touched">
+      VIN must be 17 characters long.
+    </div>
+  </div>
+
+  <div>
+    <label for="mileage">Mileage:</label>
+    <input id="mileage" type="number" formControlName="mileage" />
+    <div *ngIf="carForm.get('mileage')?.invalid && carForm.get('mileage')?.touched">
+      Mileage must be a positive number.
+    </div>
+  </div>
+
+  <div>
+    <label for="note">Note:</label>
+    <textarea id="note" formControlName="note"></textarea>
+  </div>
+
+  <button type="submit" [disabled]="carForm.invalid">
+    {{ isEditMode ? 'Update Car' : 'Add Car' }}
+  </button>
+</form>

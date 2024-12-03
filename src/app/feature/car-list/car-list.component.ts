@@ -1,53 +1,36 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CarService } from '../../shared/services/car.service';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { CarModel } from '../../shared/models/CarModel';
-import { DatePipe } from '@angular/common';
+import { Car } from '../../shared/models/Car';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-car-list',
-  standalone: true,
-  imports: [
-    MatTableModule,
-    MatCheckboxModule,
-    MatPaginatorModule,
-    DatePipe,
-    // Add any custom pipes here, like CarTypePipe if available
-  ],
   templateUrl: './car-list.component.html',
-  styleUrls: ['./car-list.component.scss']
+  styleUrls: ['./car-list.component.scss'],
+  imports: [
+    NgForOf
+  ],
+  standalone: true
 })
 export class CarListComponent implements OnInit {
-  constructor(private carService: CarService) {}
+  carList: Car[] = [];
+  selectedCar: Car | null = null;
+  paginatedCars: Car[] = [];
 
-  carList: CarModel[] = [];
-  displayedColumns: string[] = [
-    'select',
-    'carModel',
-    'color',
-    'vin',
-    'manufactureYear',
-    'mileage',
-    'note'
-  ];
+  // Параметри пагінації
+  currentPage: number = 1;
+  itemsPerPage: number = 5; // Кількість записів на сторінку
+  totalPages: number = 1;
 
-  dataSource = new MatTableDataSource(this.carList);
-  selection = new SelectionModel(true, []);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  constructor(private carService: CarService, private router: Router) {}
 
   ngOnInit(): void {
     this.carService.getCars().subscribe({
       next: res => {
-        this.carList = res as CarModel[];
-        this.dataSource.data = this.carList;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.carList = res as Car[];
+        this.updatePagination();
       },
       error: err => {
         console.log(err);
@@ -55,13 +38,56 @@ export class CarListComponent implements OnInit {
     });
   }
 
-  selectHandler(row: CarModel): void {
-    this.selection.toggle(row);
+  selectCar(car: Car): void {
+    this.selectedCar = car;
   }
 
-  currentPage = 0;
+  navigateToAdd(): void {
+    this.router.navigate(['/car/add']);
+  }
 
-  handlePageEvent(event: PageEvent): void {
-    console.log(event, this.currentPage);
+  navigateToEdit(): void {
+    if (this.selectedCar) {
+      // Navigate to the edit page for the selected car
+      this.router.navigate(['/car/update', this.selectedCar.carID]);
+    }
+  }
+
+  navigateToDelete(): void {
+    if (this.selectedCar) {
+      // Navigate to the delete page for the selected car
+      this.carService.deleteCar(this.selectedCar.carID).subscribe({
+        next: res => {
+          // Remove the car from the list
+          this.carList = this.carList.filter(car => car.carID !== this.selectedCar?.carID);
+          this.selectedCar = null;
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
+
+    }
+  }
+
+  updatePagination(): void {
+    this.totalPages = Math.ceil(this.carList.length / this.itemsPerPage);
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedCars = this.carList.slice(startIndex, endIndex);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
   }
 }
