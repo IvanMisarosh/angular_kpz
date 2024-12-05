@@ -1,4 +1,4 @@
-.login-container {
+.register-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +6,7 @@
   background: #f5f5f5;
 }
 
-.login-form {
+.register-form {
   background: #fff;
   padding: 2rem;
   border-radius: 8px;
@@ -47,7 +47,7 @@
     }
   }
 
-  .login-button {
+  .register-button {
     width: 95%;
     padding: 0.75rem;
     background: #398e3b;
@@ -59,7 +59,7 @@
     transition: background 0.3s;
 
     &:hover {
-      background: #398e3b;
+      background: #358f32;
     }
 
     &:focus {

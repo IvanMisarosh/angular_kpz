@@ -11,68 +11,55 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
     const accessToken = localStorage.getItem('accessToken');
-    console.log('Access token: ', accessToken);
 
     if (accessToken) {
-      // debugger;
-      request = request.clone({
-        // setHeaders: {
-        //   Authorization: `Bearer ${accessToken}`
-        // }
-        headers: request.headers.set('Authorization', `Bearer ${accessToken}`)
-
-      });
-      console.log("Headers: ", request.headers)
-      console.log('Access token found, adding to request');
-      console.log('Request: ', request);
+      // Clone the request and add the Authorization header
+      request = this.addTokenToRequest(request, accessToken);
     }
 
     return next.handle(request).pipe(
       catchError(error => {
-        console.log('Error: ', error);
+        // Handle 401 error and attempt token refresh
         if (error.status === 401 && !this.isRefreshing) {
           this.isRefreshing = true;
 
           return this.authService.refreshToken().pipe(
             switchMap(() => {
               this.isRefreshing = false;
+
+              // Retrieve new token and clone the request with it
               const newToken = localStorage.getItem('accessToken');
+              if (newToken) {
+                return next.handle(this.addTokenToRequest(request, newToken));
+              }
 
-              console.log('New token: ', newToken);
-              const newRequest = request.clone({
-                setHeaders: {
-                  Authorization: `Bearer ${newToken}`
-                }
-              });
-
-              console.log('Request: ', newRequest);
-              return next.handle(newRequest);
-
-
-
-              // Clone request with new token
-              // return next.handle(request.clone({
-              //   setHeaders: {
-              //     Authorization: `Bearer ${newToken}`
-              //   }
-              // }));
-
-              // console.log('Request: ', newRequest);
-              // return next.handle(newRequest);
+              return throwError(() => new Error('Token refresh failed'));
             }),
             catchError(refreshError => {
               this.isRefreshing = false;
               this.authService.logout();
-              console.error('Failed to refresh token');
-              return throwError(refreshError);
+              return throwError(() => refreshError);
             })
           );
         }
 
-        return throwError(error);
+        return throwError(() => error);
       })
     );
+  }
+
+  /**
+   * Helper function to add Authorization header to requests
+   * @param request The original HTTP request
+   * @param token The JWT token to add
+   * @returns A cloned HTTP request with the Authorization header
+   */
+  private addTokenToRequest(request: HttpRequest<any>, token: string): HttpRequest<any> {
+    return request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
   }
 }

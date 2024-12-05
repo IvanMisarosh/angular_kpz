@@ -22,6 +22,10 @@ export class AuthService {
     private router: Router
   ) {}
 
+  getAccessToken(): string | null {
+    return localStorage.getItem('accessToken');
+  }
+
   login(username: string, password: string): Observable<any> {
     // debugger;
     return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
@@ -48,10 +52,14 @@ export class AuthService {
       catchError(error => {
         // If refresh fails, logout
         console.error('Failed to refresh token');
-        this.logout();
+        // this.logout();
         return throwError(error);
       })
     );
+  }
+
+  register(username: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, { username, password });
   }
 
   logout() {

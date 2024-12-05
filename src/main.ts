@@ -7,23 +7,23 @@ import {provideRouter} from '@angular/router';
 import {routes} from './app/app.routes';
 
 
-// bootstrapApplication(AppComponent, {
-//   providers: [
-//     provideHttpClient(
-//       withInterceptorsFromDi()
-//     ),
-//     {
-//       provide: HTTP_INTERCEPTORS,
-//       useClass: AuthInterceptor,
-//       multi: true, // Allows multiple interceptors if needed
-//     },
-//     provideRouter(routes)
-//   ]
-// }).catch(err => console.error(err));
-
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptorsFromDi()
+    ),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true, // Allows multiple interceptors if needed
+    },
     provideRouter(routes)
   ]
 }).catch(err => console.error(err));
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     provideHttpClient(),
+//     provideRouter(routes)
+//   ]
+// }).catch(err => console.error(err));
