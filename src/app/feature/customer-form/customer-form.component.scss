@@ -1,0 +1,113 @@
+/* Basic Layout */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+option {
+  font-size: 14px;
+  text-wrap: none;
+}
+
+
+//select:focus {
+//  width: 90%;
+//}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Form controls */
+div {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+input, select, textarea {
+  width: 95%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+//input[type="number"], input[type="text"] {
+//  max-width: 96%;
+//}
+
+select {
+  max-width: 100%;
+}
+
+/* Error messages */
+div > div {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+button[type="submit"]:not(:disabled):hover {
+  background-color: #45a049;
+}
+
+/* Select Dropdown Styling */
+select {
+  height: 36px;
+  font-size: 14px;
+}
+
+/* Textarea */
+textarea {
+  min-height: 100px;
+  max-width: 96%;
+  resize: vertical;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  form {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  button[type="submit"] {
+    padding: 10px;
+  }
+}

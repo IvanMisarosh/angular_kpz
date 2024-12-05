@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { CarListComponent } from './feature/car-list/car-list.component';
 import { CarFormComponent } from './feature/car-form/car-form.component';
 import { LoginComponent } from './feature/login/login.component'; // Import your login component
+import { CustomerListComponent } from './feature/customer-list/customer-list.component';
+import { CustomerFormComponent } from './feature/customer-form/customer-form.component';
 import { AuthGuard } from './core/guards/auth.guard'; // Import the AuthGuard
 
 export const routes: Routes = [
@@ -25,6 +27,18 @@ export const routes: Routes = [
     path: '',
     redirectTo: '/car',
     pathMatch: 'full',
+  },
+  {
+    path: 'customer',
+    component: CustomerListComponent
+  },
+  {
+    path: 'customer/update/:id',
+    component: CustomerFormComponent
+  },
+  {
+    path: 'customer/add',
+    component: CustomerFormComponent
   },
   {
     path: '**',

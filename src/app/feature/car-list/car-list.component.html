@@ -35,7 +35,7 @@
 </table>
 
 <nav class="page-nav">
-  <button (click)="prevPage()" [disabled]="currentPage === totalPages">Prev</button>
+  <button (click)="prevPage()" [disabled]="currentPage <= 1">Prev</button>
   <span>Page {{ currentPage }} of {{ totalPages }}</span>
   <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
 </nav>

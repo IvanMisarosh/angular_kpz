@@ -1,0 +1,45 @@
+<h2>{{ isEditMode ? 'Edit Customer' : 'Add Customer' }}</h2>
+
+<form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+
+  <!-- First Name -->
+  <div>
+    <label for="firstName">First Name:</label>
+    <input id="firstName" type="text" formControlName="firstName" />
+    <div *ngIf="customerForm.get('firstName')?.invalid && customerForm.get('firstName')?.touched">
+      First Name is required.
+    </div>
+  </div>
+
+  <!-- Last Name -->
+  <div>
+    <label for="lastName">Last Name:</label>
+    <input id="lastName" type="text" formControlName="lastName" />
+    <div *ngIf="customerForm.get('lastName')?.invalid && customerForm.get('lastName')?.touched">
+      Last Name is required.
+    </div>
+  </div>
+
+  <!-- Email -->
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email" />
+    <div *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched">
+      Email must be a valid email address.
+    </div>
+  </div>
+
+  <!-- Phone Number -->
+  <div>
+    <label for="phoneNumber">Phone Number:</label>
+    <input id="phoneNumber" type="text" formControlName="phoneNumber" />
+    <div *ngIf="customerForm.get('phoneNumber')?.invalid && customerForm.get('phoneNumber')?.touched">
+      Phone Number is required and must be 10 digits long.
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" [disabled]="customerForm.invalid">
+    {{ isEditMode ? 'Update Customer' : 'Add Customer' }}
+  </button>
+</form>

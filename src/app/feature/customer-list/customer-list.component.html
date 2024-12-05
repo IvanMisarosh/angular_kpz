@@ -1,0 +1,35 @@
+<nav class="page-nav">
+  <!-- Separate buttons for Add and Edit -->
+  <button (click)="navigateToAdd()">Add Customer</button>
+  <button (click)="navigateToEdit()" [disabled]="!selectedCustomer">Update Customer</button>
+  <button (click)="navigateToDelete()" [disabled]="!selectedCustomer">Delete Customer</button>
+</nav>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Select</th>
+    <th>Customer Name</th>
+    <th>Email</th>
+    <th>Phone number</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let customer of paginatedCustomers">
+    <td>
+      <input type="radio" name="selectedCustomer" (click)="selectCustomer(customer)">
+    </td>
+    <td>{{ customer.firstName + customer.lastName }}</td>
+    <td>{{ customer.email }}</td>
+    <td>{{ customer.phoneNumber }}</td>
+
+  </tr>
+  </tbody>
+</table>
+
+<nav class="page-nav">
+  <button (click)="prevPage()" [disabled]="currentPage <= 1">Prev</button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+</nav>
+
