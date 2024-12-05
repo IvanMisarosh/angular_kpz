@@ -1,0 +1,120 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f0f0f0; /* Soft light gray background */
+  padding: 0;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Smooth, clean font */
+  color: #333;
+  line-height: 1.6;
+}
+
+.page-wrap {
+  display: grid;
+  grid-template-columns: 250px 1fr; /* Sidebar is 250px wide for more space */
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  height: 100vh;
+  background: #fff;
+
+  > * {
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    > * {
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
+  }
+}
+
+.page-header {
+  grid-column: 1 / -1;
+  background: #4caf50; /* Green background for header */
+  color: white;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  padding: 1.5rem;
+}
+
+.page-sidebar {
+  grid-column: 1 / 2;
+  grid-row: 2 / 4;
+  background: #f9f9f9;
+  color: #081526;
+  padding-top: 2rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.page-nav a {
+  color: #081526;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  text-align: center;
+
+}
+
+.page-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-main {
+  grid-column: 2 / 3;
+  background: #f9f9f9;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page-footer {
+  grid-column: 1 / -1;
+  background: #f9f9f9; /* Orange footer */
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+details p {
+  text-transform: none;
+  text-align: left;
+  margin-top: 1rem;
+}
+
+a {
+  color: inherit; /* Make sure links inherit color from parent */
+  text-decoration: none;
+}
+
+button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+button:disabled {
+  background-color: #c8e6c9;
+  cursor: not-allowed;
+}

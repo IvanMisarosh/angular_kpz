@@ -21,7 +21,7 @@ export class LoginComponent {
       .subscribe({
         next: (response) => {
           console.log('Login successful');
-          this.router.navigate(['/car']); // Redirect after successful login
+          this.router.navigate(['/car'])// Redirect after successful login
         },
         error: (error) => {
           console.error('Login failed', error);

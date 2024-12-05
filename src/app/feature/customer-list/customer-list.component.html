@@ -19,7 +19,7 @@
     <td>
       <input type="radio" name="selectedCustomer" (click)="selectCustomer(customer)">
     </td>
-    <td>{{ customer.firstName + customer.lastName }}</td>
+    <td>{{ customer | fullName}}</td>
     <td>{{ customer.email }}</td>
     <td>{{ customer.phoneNumber }}</td>
 

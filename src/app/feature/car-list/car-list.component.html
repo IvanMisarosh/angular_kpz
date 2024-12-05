@@ -23,7 +23,7 @@
     <td>
       <input type="radio" name="selectedCar" (click)="selectCar(car)">
     </td>
-    <td>{{ car.customer.firstName }}</td>
+    <td>{{ car.customer | fullName }}</td>
     <td>{{ car.carModel.modelName }}</td>
     <td>{{ car.color.colorName }}</td>
     <td>{{ car.vin }}</td>

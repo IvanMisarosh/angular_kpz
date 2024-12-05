@@ -3,12 +3,14 @@ import { Router } from '@angular/router';
 import { Customer } from '../../shared/models/Customer';
 import { CustomerService } from '../../shared/services/customer.service';
 import {NgForOf} from '@angular/common';
+import {FullNamePipe} from '../../shared/pipes/customer.pipe';
 
 
 @Component({
   selector: 'app-customer-list',
   imports: [
-    NgForOf
+    NgForOf,
+    FullNamePipe
   ],
   templateUrl: './customer-list.component.html',
   standalone: true,

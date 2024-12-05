@@ -1,25 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Customer } from '../models/Customer';
-import { DropDownsService } from '../services/dropdown.service';
+import { Customer } from '../models/Customer'; // Adjust the path as per your project structure
 
 @Pipe({
-  name: 'employee',
-  standalone: true
+  standalone: true,
+  name: 'fullName'
 })
-export class CustomerPipe implements PipeTransform {
-  constructor(public dropDownsService: DropDownsService) {
-
-  }
-
-  list: Customer[] = [];
-
-  transform(value: Number): string {
-    this.dropDownsService.getCustomers().subscribe({
-      next: res => {
-        this.list = res as Customer[];
-      }
-    });
-    const emp = this.list.find(e => e.customerID === value);
-    return `${emp?.firstName ?? ""} ${emp?.lastName ?? ""}`;
+export class FullNamePipe implements PipeTransform {
+  transform(customer: Customer): string {
+    return `${customer.firstName} ${customer.lastName}`;
   }
 }

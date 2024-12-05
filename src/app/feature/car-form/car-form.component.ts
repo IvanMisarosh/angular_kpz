@@ -95,13 +95,13 @@ export class CarFormComponent implements OnInit {
         // Update an existing car
         this.carService.updateCar(car).subscribe(() => {
           // Reset or navigate after success
-          this.router.navigate(['../']);
+          this.router.navigate(['/car']);
         });
       } else {
         // Add a new car
         this.carService.addCar(car).subscribe(() => {
           // Reset or navigate after success
-          this.router.navigate(['../'])
+          this.router.navigate(['/car'])
         });
       }
     }

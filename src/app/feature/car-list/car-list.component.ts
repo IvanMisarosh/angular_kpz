@@ -3,13 +3,15 @@ import { Router } from '@angular/router';
 import { CarService } from '../../shared/services/car.service';
 import { Car } from '../../shared/models/Car';
 import {NgForOf} from '@angular/common';
+import {FullNamePipe} from '../../shared/pipes/customer.pipe';
 
 @Component({
   selector: 'app-car-list',
   templateUrl: './car-list.component.html',
   styleUrls: ['./car-list.component.scss'],
   imports: [
-    NgForOf
+    NgForOf,
+    FullNamePipe
   ],
   standalone: true
 })
